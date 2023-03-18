@@ -65,8 +65,14 @@ class FormManager
                 function (Player $p, $data = null) {
                     if ($data === null)
                         return;
-                    if ($data == "close")
-                        return;
+                    if ($data !== "close"){
+                        API::getInstance()->removeFriend($p->getName(), $data);
+                        $p->sendMessage("§aYou have removed §e".$data."§a from the friends list.");
+                        $fPlayer = Server::getInstance()->getPlayerExact($data);
+                        if($fPlayer instanceof Player){
+                            $fPlayer->sendMessage("§f".$p->getName()." §cremoved you from the friend list");
+                        }
+                    }
                     return;
                 }
             );
@@ -74,6 +80,7 @@ class FormManager
             $timeAgo = API::getInstance()->getTimeAgo(DateTime::createFromFormat("Y-m-d H:i:s", $date)->getTimestamp());
             $form->setTitle("Friend $data");
             $form->setContent("§fFriend since: §a" . $date . "§7 (" . $timeAgo . ")");
+            $form->addButton("§lRemove Friend", label: $data);
             $form->addButton("§l§cClose", 0, "textures/blocks/barrier", label: "close");
             $form->sendToPlayer($p);
             return;
