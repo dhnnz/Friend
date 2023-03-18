@@ -53,7 +53,7 @@ class API
     public function getFriendList(string $playerName): array
     {
         if (!file_exists($this->plugin->getDataFolder() . "accounts/" . $playerName . ".json"))
-            return 0;
+            return array();
         $config = new Config($this->plugin->getDataFolder() . "accounts/" . $playerName . ".json", Config::JSON, []);
         return $config->getAll()["friends"];
     }
@@ -66,7 +66,7 @@ class API
     public function getRequests(string $playerName): array
     {
         if (!file_exists($this->plugin->getDataFolder() . "accounts/" . $playerName . ".json"))
-            return 0;
+            return array();
         $config = new Config($this->plugin->getDataFolder() . "accounts/" . $playerName . ".json", Config::JSON, []);
         return $config->getAll()["requests"];
     }
@@ -80,7 +80,7 @@ class API
     public function getFriendData(string $playerName, string $friendName): array|bool
     {
         if (!file_exists($this->plugin->getDataFolder() . "accounts/" . $playerName . ".json"))
-            return "";
+            return array();
         $config = new Config($this->plugin->getDataFolder() . "accounts/" . $playerName . ".json", Config::JSON, []);
         $friends = $config->getAll()["friends"];
         $key = array_search($friendName, $friends);
@@ -97,7 +97,7 @@ class API
     public function getRequestData(string $playerName, string $friendName): array|bool
     {
         if (!file_exists($this->plugin->getDataFolder() . "accounts/" . $playerName . ".json"))
-            return "";
+            return array();
         $config = new Config($this->plugin->getDataFolder() . "accounts/" . $playerName . ".json", Config::JSON, []);
         $requests = $config->getAll()["requests"];
         $key = array_search($friendName, array_column($requests, $friendName));
