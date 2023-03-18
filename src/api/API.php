@@ -212,6 +212,7 @@ class API
                 return $t . ' ' . $str . ($t > 1 ? 's' : '') . ' ago';
             }
         }
+        return '';
     }
 
     /**
