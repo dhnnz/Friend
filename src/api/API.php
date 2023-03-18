@@ -239,8 +239,8 @@ class API
         $configPlayer = new Config($this->plugin->getDataFolder() . "accounts/" . $playerName . ".json", Config::JSON, []);
         $configFriend = new Config($this->plugin->getDataFolder() . "accounts/" . $friendName . ".json", Config::JSON, []);
         $keyToRemovePlayer = array_search($friendName, array_column($configPlayer->getAll()['friends'], 'name'));
-        unset($array['friends'][$keyToRemovePlayer]);
+        unset($configPlayer->getAll()['friends'][$keyToRemovePlayer]);
         $keyToRemoveFPlayer = array_search($playerName, array_column($configFriend->getAll()['friends'], 'name'));
-        unset($array['friends'][$keyToRemoveFPlayer]);
+        unset($configFriend->getAll()['friends'][$keyToRemoveFPlayer]);
     }
 }
