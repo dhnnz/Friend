@@ -12,6 +12,17 @@ The Friend Plugin for PocketMine also allows players to view their friends' onli
 - Friend Online
 - Unlimited Friend
 
+# Commands
+
+- /friend (Main command)
+- /friends (Main command)
+- /f (Main command)
+
+# Sub Commands
+
+- /friend online (friend online)
+- /friend chat (friend chat message)
+
 # API
 
 ```php

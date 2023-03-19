@@ -236,12 +236,29 @@ class API
         return $result;
     }
 
-    public function removeFriend(string $playerName, string $friendName){
-        $configPlayer = new Config($this->plugin->getDataFolder() . "accounts/" . $playerName . ".json", Config::JSON, []);
-        $configFriend = new Config($this->plugin->getDataFolder() . "accounts/" . $friendName . ".json", Config::JSON, []);
-        $keyToRemovePlayer = array_search($friendName, array_column($configPlayer->getAll()['friends'], 'name'));
-        unset($configPlayer->getAll()['friends'][$keyToRemovePlayer]);
-        $keyToRemoveFPlayer = array_search($playerName, array_column($configFriend->getAll()['friends'], 'name'));
-        unset($configFriend->getAll()['friends'][$keyToRemoveFPlayer]);
+    /**
+     * Summary of removeFriend
+     * @param string $playerName
+     * @param string $friendName
+     * @return void
+     */
+    public function removeFriend(string $playerName, string $friendName)
+    {
+        $accountsPath = $this->plugin->getDataFolder() . "accounts/";
+
+        $configPlayer = new Config($accountsPath . $playerName . ".json", Config::JSON, []);
+        $configFriend = new Config($accountsPath . $friendName . ".json", Config::JSON, []);
+
+        $arrayPlayer = $configPlayer->getAll();
+        $arrayFriend = $configFriend->getAll();
+
+        unset($arrayPlayer['friends'][array_search($friendName, array_column($arrayPlayer['friends'], 'name'))]);
+        unset($arrayFriend['friends'][array_search($playerName, array_column($arrayFriend['friends'], 'name'))]);
+
+        $configPlayer->setAll($arrayPlayer);
+        $configPlayer->save();
+        $configFriend->setAll($arrayFriend);
+        $configFriend->save();
     }
+
 }
